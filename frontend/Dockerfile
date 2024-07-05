@@ -4,6 +4,7 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 COPY . ./
+RUN npm install vite --save-dev
 RUN npm run build
 
 FROM nginx:alpine
