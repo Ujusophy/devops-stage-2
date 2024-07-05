@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 WORKDIR /app
 COPY pyproject.toml poetry.lock ./
-RUN sudo apt install python3-poetry -y
+RUN apt install python3-poetry -y
 RUN poetry add uvicorn
 RUN poetry shell
 RUN poetry run uvicorn app.main:app --reload
