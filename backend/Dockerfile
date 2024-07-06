@@ -17,6 +17,6 @@ RUN poetry install --no-root
 COPY . .
 
 # Expose port 80
-ENV PYTHONPATH=application
+ENV PYTHONPATH=app
 
 RUN poetry run bash ./prestart.sh
