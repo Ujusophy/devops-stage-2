@@ -12,18 +12,16 @@ services:
 
   backend:
     build: ./backend
-    ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql://app:changethis123@db:5432/app
-    env_file:
-      - ./backend/.env
     depends_on:
       - db
+    env_file:
+      - ./backend/.env
 
   db:
     image: postgres:latest
+    container_name: postgres_db
     environment:
+      POSTGRES_SERVER: localhost
       POSTGRES_USER: app
       POSTGRES_PASSWORD: changethis123
       POSTGRES_DB: app
