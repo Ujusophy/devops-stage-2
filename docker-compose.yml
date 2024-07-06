@@ -4,11 +4,13 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "8081:80"
+      - "8081:80"  # Map container port 80 to host port 8081
     env_file:
       - ./frontend/.env
     depends_on:
       - backend
+    networks:
+      - backend_network
 
   backend:
     build: ./backend
@@ -20,6 +22,8 @@ services:
       - ./backend/.env
     depends_on:
       - db
+    networks:
+      - backend_network
 
   db:
     image: postgres:latest
@@ -31,6 +35,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend_network
 
   nginx:
     image: nginx:alpine
@@ -41,6 +47,8 @@ services:
     depends_on:
       - frontend
       - backend
+    networks:
+      - backend_network
 
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
@@ -57,11 +65,19 @@ services:
       - ./letsencrypt:/etc/letsencrypt
       - ./nginx-proxy-manager:/app/data
     restart: always
+    networks:
+      - backend_network
 
   adminer:
     image: adminer
     ports:
-      - "8080:8080"  
+      - "8080:8080" 
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
 
 volumes:
   postgres_data:
