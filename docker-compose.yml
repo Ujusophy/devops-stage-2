@@ -9,8 +9,6 @@ services:
       - ./frontend/.env
     depends_on:
       - backend
-    networks:
-      - backend_network
 
   backend:
     build: ./backend
@@ -22,8 +20,7 @@ services:
       - ./backend/.env
     depends_on:
       - db
-    networks:
-      - backend_network
+      - nginx
 
   db:
     image: postgres:latest
