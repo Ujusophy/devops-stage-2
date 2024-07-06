@@ -28,6 +28,15 @@ services:
     environment:
         ADMINER_DEFAULT_SEVERAL: db
 
+  proxy:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '8090:81'
+    volumes:
+      - ./proxy/data:/data
+      - ./proxy/letsencrypt:/etc/letsencrypt
+
   backend:
     build:
       context: ./backend
