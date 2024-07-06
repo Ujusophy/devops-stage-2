@@ -6,9 +6,9 @@ services:
     build:
       context: ./frontend/Dockerfile 
     ports:
-      - "80:80"
+      - "8081:80"
     environment:
-      VITE_API_URL: http://localhost:8000
+      VITE_API_URL: http://backend:8000
 
   db:
     image: postgres:latest
@@ -40,11 +40,13 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "8081:80"
+      - "80:80"
       - "443:443"
     depends_on:
       - frontend
       - backend
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
 
 volumes:
   db_data:
