@@ -1,13 +1,28 @@
 FROM python:3.12-slim
-WORKDIR /app
-RUN apt-get update \
-    && apt-get install -y curl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+
+# Install Poetry
 RUN pip install poetry
+
+# Set the working directory
+WORKDIR /app
+
+# Copy only the Poetry files to install dependencies first (for better caching)
 COPY pyproject.toml poetry.lock ./
-RUN poetry install
+
+# Install the dependencies
+RUN poetry install --no-root
+
+# Copy the rest of the application files
 COPY . .
+
+# Expose the application port
 EXPOSE 8000
-RUN chmod +x ./prestart.sh
-ENTRYPOINT ["bash", "-c", "./prestart.sh && poetry run uvicorn app.main:app --host 0.0.0.0 --port 80"]
+
+# Set environment variables
+ENV PYTHONPATH=/app
+
+# Run prestart script using poetry
+RUN poetry run bash ./prestart.sh
+
+# Start the application using poetry
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
