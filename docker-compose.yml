@@ -32,8 +32,9 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - backend_network
+    depends_on:
+      - nginx
+      - backend
 
   nginx:
     image: nginx:alpine
@@ -44,8 +45,8 @@ services:
     depends_on:
       - frontend
       - backend
-    networks:
-      - backend_network
+      - db
+      - adminer
 
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
@@ -62,19 +63,15 @@ services:
       - ./letsencrypt:/etc/letsencrypt
       - ./nginx-proxy-manager:/app/data
     restart: always
-    networks:
-      - backend_network
 
   adminer:
     image: adminer
     ports:
       - "8080:8080" 
-    networks:
-      - backend_network
-
-networks:
-  backend_network:
-    driver: bridge
+    depends_on:
+      - db
+      - backend
+      - nginx
 
 volumes:
   postgres_data:
