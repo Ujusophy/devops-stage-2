@@ -4,7 +4,7 @@ version: "3.8"
 services:
   frontend:
     build:
-      context: ./frontend/Dockerfile 
+      context: ./frontend
     ports:
       - "5173:5173"
 
@@ -28,14 +28,14 @@ services:
 
   backend:
     build:
-      context: ./backend/Dockerfile
+      context: ./backend
     env_file: ./backend/.env
     ports:
       - "8000:8000"
     depends_on:
       - db
 
-      
+
   nginx:
     image: nginx:latest
     ports:
