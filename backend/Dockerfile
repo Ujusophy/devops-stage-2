@@ -1,27 +1,26 @@
-# Use Python slim image
-FROM python:3.12-slim
+# Use Python 3.10 as base image
+FROM python:3.10-slim
 
-# Install poetry
+# Install Poetry
 RUN pip install poetry
 
 # Set working directory
 WORKDIR /app
 
-# Copy dependencies definition files
+# Copy poetry files (pyproject.toml and poetry.lock)
 COPY pyproject.toml poetry.lock ./
 
-# Install dependencies
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-root
+# Install dependencies using Poetry
+RUN poetry install --no-root
 
-# Copy the rest of the application
+# Copy the rest of the application code
 COPY . .
 
-# Expose port
+# Expose port if needed (for FastAPI, typically 8000)
 EXPOSE 8000
 
-# Set environment variables
+# Set environment variable if needed
 ENV PYTHONPATH=/app
 
-# Run your startup script
-CMD ["poetry", "run", "bash", "./prestart.sh"]
+# Run your script or application
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
