@@ -41,8 +41,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "8081:80"
-      - "443:443"
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
     depends_on:
