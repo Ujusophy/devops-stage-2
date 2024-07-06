@@ -48,11 +48,11 @@ services:
       - "8090:81"  
       
     environment:
-      DB_MYSQL_HOST: db
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: root
-      DB_MYSQL_PASSWORD: changethis123
-      DB_MYSQL_NAME: proxy
+      DB_DATABASE: proxy
+      DB_USER: app
+      DB_PASSWORD: changethis123
+      DB_HOST: db
+      DB_PORT: 5432
     volumes:
       - ./proxy_data:/data
       - ./letsencrypt:/etc/letsencrypt
