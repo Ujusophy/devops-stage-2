@@ -1,22 +1,11 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.11-slim
+FROM python:3.10-slim
 
-# Set the working directory in the container
+RUN apt-get update && apt-get install -y curl
 WORKDIR /app
-
-# Copy the Poetry configuration files
-COPY pyproject.toml poetry.lock ./
-
-# Install Poetry
-RUN pip install poetry
-
-# Install dependencies
-RUN poetry install --no-root
-
-# Copy the application files
-COPY . .
-
-# Expose port 80
-ENV PYTHONPATH=/app
-
-RUN poetry run bash ./prestart.sh
+RUN curl -sSL https://install.python-poetry.org | python3
+ENV PATH="/root/.local/bin:${PATH}"
+COPY . ./
+RUN poetry install
+RUN chmod +x ./prestart.sh
+EXPOSE 8000
+CMD ["sh", "-c", "./prestart.sh && poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"]
