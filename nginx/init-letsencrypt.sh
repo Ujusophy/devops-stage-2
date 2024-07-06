@@ -29,5 +29,4 @@ else
     $staging_arg
 
   echo "### Reloading nginx ..."
-  nginx -s reload
 fi
