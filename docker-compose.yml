@@ -21,7 +21,6 @@ services:
     image: postgres:latest
     container_name: postgres_db
     environment:
-      POSTGRES_SERVER: localhost
       POSTGRES_USER: app
       POSTGRES_PASSWORD: changethis123
       POSTGRES_DB: app
