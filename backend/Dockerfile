@@ -1,13 +1,9 @@
 FROM python:3.12-slim
-WORKDIR /app
-RUN apt-get update \
-    && apt-get install -y curl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 RUN pip install poetry
+WORKDIR /app
 COPY pyproject.toml poetry.lock ./
-RUN poetry install
+RUN poetry install --no-root
 COPY . .
 EXPOSE 8000
-RUN chmod +x ./prestart.sh
-ENTRYPOINT ["bash", "-c", "./prestart.sh && poetry run uvicorn app.main:app --host 0.0.0.0 --port 80"]
+ENV PYTHONPATH=/app
+RUN poetry run bash ./presyart.sh
