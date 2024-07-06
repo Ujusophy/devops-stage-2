@@ -1,10 +1,20 @@
-FROM python:3.10-slim
+FROM python:3.11
 
-RUN apt-get update && apt-get install -y curl
-WORKDIR /app
-RUN curl -sSL https://install.python-poetry.org | python3
-ENV PATH="/root/.local/bin:${PATH}"
-COPY . ./
-RUN poetry install
-EXPOSE 8000
-CMD poetry run bash ./prestart.sh; poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+# Install Poetry
+RUN pip install poetry
+
+# Set the working directory
+WORKDIR /application
+
+# Copy pyproject.toml and poetry.lock to the working directory
+COPY pyproject.toml poetry.lock ./
+
+# Install dependencies using Poetry
+RUN poetry install --no-root
+
+# Copy the rest of the application cosudode into the container
+COPY . .
+
+ENV PYTHONPATH=/application
+
+CMD poetry run bash ./prestart.sh; poetry run uvicorn app.main:app --host 0.0.0.0
