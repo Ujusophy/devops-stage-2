@@ -49,7 +49,7 @@ services:
 
   nginx:
     build:
-      context: .
+      context: ./nginx
     ports:
       - "80:80"
     volumes:
