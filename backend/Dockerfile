@@ -1,4 +1,5 @@
-FROM python:3.12-slim
+# Use Python 3.10 slim base image
+FROM python:3.10-slim
 
 # Set working directory
 WORKDIR /app
@@ -18,7 +19,7 @@ RUN poetry config virtualenvs.create false \
     && poetry install --no-root
 
 # Install additional dependencies if needed
-RUN pip install sqlalchemy sqlmodel
+RUN pip install sqlalchemy sqlmodel alembic
 
 # Copy the application code
 COPY . .
