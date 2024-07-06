@@ -6,4 +6,4 @@ RUN poetry install --no-root
 COPY . .
 EXPOSE 8000
 ENV PYTHONPATH=/app
-RUN poetry run bash ./presyart.sh
+RUN poetry run bash ./prestart.sh
