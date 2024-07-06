@@ -6,7 +6,7 @@ services:
     ports:
       - "80:80"
     env_file:
-      - ./frontend/ .env
+      - ./frontend/.env
     depends_on:
       - backend
 
@@ -17,7 +17,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://app:changethis123@db:5432/app
     env_file:
-      - ./backend/ .env
+      - ./backend/.env
     depends_on:
       - db
 
@@ -45,8 +45,7 @@ services:
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
     ports:
-      - "8090:81"  
-      
+      - "8090:81"
     environment:
       DB_DATABASE: proxy
       DB_USER: app
@@ -60,4 +59,4 @@ services:
     restart: always
 
 volumes:
-  postgres-data: {}
+  postgres_data:
