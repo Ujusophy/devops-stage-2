@@ -4,8 +4,7 @@ version: "3.8"
 services:
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile 
+      context: ./frontend/Dockerfile 
     ports:
       - "80:80"
     environment:
@@ -29,8 +28,7 @@ services:
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ./backend/Dockerfile
     environment:
       - DATABASE_URL=postgres://app:changethis123@db:5432/app
     env_file: ./backend/.env
