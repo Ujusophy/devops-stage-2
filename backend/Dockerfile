@@ -24,5 +24,4 @@ EXPOSE 8000
 ENV PYTHONPATH=/app
 
 # Run your startup script
-RUN poetry run bash ./prestart.sh
-v
+CMD ["poetry", "run", "bash", "./prestart.sh"]
