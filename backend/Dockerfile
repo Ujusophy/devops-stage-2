@@ -2,7 +2,7 @@
 FROM python:3.10-slim
 
 # Install Poetry
-RUN pip install poetry
+RUN sudo apt install python3-poetry
 
 # Set working directory
 WORKDIR /app
