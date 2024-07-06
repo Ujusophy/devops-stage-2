@@ -10,5 +10,4 @@ RUN poetry install
 COPY . .
 EXPOSE 8000
 RUN chmod +x ./prestart.sh
-RUN poetry run bash ./prestart.sh
 ENTRYPOINT ["bash", "-c", "./prestart.sh && poetry run uvicorn app.main:app --host 0.0.0.0 --port 80"]
