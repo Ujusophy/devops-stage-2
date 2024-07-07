@@ -9,7 +9,7 @@ COPY ./init-letsencrypt.sh /init-letsencrypt.sh
 
 RUN chmod +x /init-letsencrypt.sh
 
-RUN ./init-letsencrypt.sh
+# RUN ./init-letsencrypt.sh
 
 COPY ./nginx.conf /etc/nginx/conf.d/nginx.conf
 
