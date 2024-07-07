@@ -37,7 +37,7 @@ services:
       - '443:443'
     volumes:
       - ./proxy/data:/data
-      - ./nginx/nginx.conf:/data/nginx/proxy_host
+      - ./conf_files:/data/nginx/proxy_host
       - ./proxy/letsencrypt:/etc/letsencrypt
 
   backend:
