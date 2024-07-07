@@ -27,3 +27,17 @@ This directory contains the frontend of the application built with ReactJS and C
 4. **Configure API URL**:
    Ensure the API URL is correctly set in the `.env` file.
 
+
+
+## Setup Instructions for Docker deployment
+
+1. **Navigate to the repo**:
+    ```sh
+    cd devops-stage-2
+    ```
+
+2. **Start your docker-compose**:
+    ```sh
+     sudo docker-compose up --build -d
+    ```
+

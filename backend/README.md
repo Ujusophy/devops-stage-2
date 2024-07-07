@@ -18,27 +18,16 @@ curl -sSL https://install.python-poetry.org | python3 -
 
 Add Poetry to your PATH (if not automatically added):
 
-## Setup Instructions
+## Setup Instructions for Docker deployment
 
-1. **Navigate to the backend directory**:
+1. **Navigate to the repo**:
     ```sh
-    cd backend
+    cd devops-stage-2
     ```
 
-2. **Install dependencies using Poetry**:
+2. **Start your docker-compose**:
     ```sh
-    poetry install
+     sudo docker-compose up --build -d
     ```
 
-3. **Set up the database with the necessary tables**:
-    ```sh
-    poetry run bash ./prestart.sh
-    ```
 
-4. **Run the backend server**:
-    ```sh
-    poetry run uvicorn app.main:app --reload
-    ```
-
-5. **Update configuration**:
-   Ensure you update the necessary configurations in the `.env` file, particularly the database configuration.
