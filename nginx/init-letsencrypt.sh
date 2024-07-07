@@ -2,18 +2,18 @@
 
 domains=(techynurse.site)
 rsa_key_size=4096
-data_path="./certbot"
+data_path="/etc/letsencrypt" # Updated to match the mounted path in the container
 email="sophyjelly718@gmail.com" # Adding a valid address is strongly recommended
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
-if [ -d "$data_path/conf/live/${domains[0]}" ]; then
+if [ -d "$data_path/live/${domains[0]}" ]; then
   echo "Certificate already exists for ${domains[*]}."
 else
   echo "### Creating 'webroot' directory in /var/www/certbot ..."
-  mkdir -p "$data_path/www"
+  mkdir -p /var/www/certbot
   echo "### Downloading recommended TLS parameters ..."
-  mkdir -p "$data_path/conf"
-  curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > "$data_path/conf/ssl-dhparams.pem"
+  mkdir -p "$data_path"
+  curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/ssl-dhparams.pem > "$data_path/ssl-dhparams.pem"
 
   echo "### Requesting Let's Encrypt certificate for ${domains[*]} ..."
   if [ $staging != "0" ]; then
@@ -29,4 +29,5 @@ else
     $staging_arg
 
   echo "### Reloading nginx ..."
+  nginx -s reload
 fi
