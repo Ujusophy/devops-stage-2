@@ -37,6 +37,7 @@ services:
       - '443:443'
     volumes:
       - ./proxy/data:/data
+      - ./nginx/nginx.conf:/data/nginx
       - ./proxy/letsencrypt:/etc/letsencrypt
 
   backend:
@@ -49,17 +50,17 @@ services:
       - db
 
 
-  nginx:
-    build:
-      context: ./nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./letsencrypt:/etc/letsencrypt
-    depends_on:
-      - frontend
-      - backend
+  # nginx:
+  #   build:
+  #     context: ./nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./letsencrypt:/etc/letsencrypt
+  #   depends_on:
+  #     - frontend
+  #     - backend
 
 volumes:
   db_data:
