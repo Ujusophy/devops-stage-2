@@ -33,14 +33,14 @@ services:
     restart: always
     ports:
       - '8090:81'
-      - '80:80'
+      # - '80:80'
       - '443:443'
     volumes:
       - ./proxy/data:/data
       - ./proxy/letsencrypt:/etc/letsencrypt
       - ./conf_files:/conf_files
       - ./entrypoint.sh:/entrypoint.sh
-    command: ["/bin/bash", "-c", "chmod +x /entrypoint.sh && /entrypoint.sh"]
+    # command: ["/bin/bash", "-c", "chmod +x /entrypoint.sh && /entrypoint.sh"]
 
   backend:
     build:
@@ -52,17 +52,17 @@ services:
       - db
 
 
-  # nginx:
-  #   build:
-  #     context: ./nginx
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./letsencrypt:/etc/letsencrypt
-  #   depends_on:
-  #     - frontend
-  #     - backend
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      # - "443:443"
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - frontend
+      - backend
 
 volumes:
   db_data:
